@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Producto extends Model
 {
     use HasFactory;
+
 
     public function compras()
     {
@@ -48,7 +50,7 @@ class Producto extends Model
     {
         $file = $image;
         $name = time() . $file->getClientOriginalName();
-        $file->move(public_path() . '/img/productos/', $name);
+        Storage::putFileAs('/public/productos/', $file, $name, 'public');
         return $name;
     }
 }

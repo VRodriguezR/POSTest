@@ -6,6 +6,7 @@
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/datatables/dataTables.dataTables.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/sweetalert2/css/sweetalert2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 @endpush
 
 @section('content')
@@ -75,15 +76,24 @@
                                                     @endif
                                                 <td>
                                                     <div class="btn-group">
-                                                        <button href="{{ route('productos.edit', ['producto' => $producto]) }}" class="btn btn-primary btn-sm">
-                                                            <i class="fas fa-edit"></i>
-                                                        </button>
+                                                        <form action="{{ route('productos.edit', ['producto' => $producto]) }}" method="GET">
+                                                            <button type="submit" class="btn btn-primary">
+                                                                <i class="fas fa-edit"></i>
+                                                            </button>
+                                                        </form>
+
                                                         <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#detailModal-{{$producto->id}}">
-                                                            <i class="fas fa-list"></i>
+                                                            <i class="fas fa-eye"></i>
                                                         </button>
-                                                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{$producto->id}}">
-                                                                    <i class="fas fa-trash"></i>
-                                                        </button>
+                                                        @if ($producto->estado == 1)
+                                                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{$producto->id}}">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        @else
+                                                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#deleteModal-{{$producto->id}}">
+                                                                <i class="fas fa-trash-restore"></i>
+                                                            </button>
+                                                        @endif
                                                     </div>
 
                                                 </td>
@@ -105,6 +115,38 @@
                                                             @csrf
                                                             <button type="submit" class="btn btn-danger">Confirmar</button>
                                                         </form>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="modal fade" id="detailModal-{{$producto->id}}" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-scrollable">
+                                                    <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="detailModalLabel">Detalles del producto.</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="row mb-1">
+                                                            <label for=""><span class="fw-bolder" style="font-weight: bolder !important; ">Descripcion:</span> {{$producto->descripcion}}</label>
+                                                        </div>
+                                                        <div class="row mb-1">
+                                                            <label for=""><span class="fw-bolder" style="font-weight: bolder !important; ">Fecha de Vencimiento:</span> {{$producto->fecha_vencimiento == '' ? 'N/A' : $producto->fecha_vencimiento}}</label>
+                                                        </div>
+                                                        <div class="row mb-1">
+                                                            <label for=""><span class="fw-bolder" style="font-weight: bolder !important; ">Stock:</span> {{$producto->stock}}</label>
+                                                        </div>
+                                                        <div class="row mb-1">
+                                                            @if($producto->img_path != '')
+                                                                <img src="{{ Storage::url('public/productos/'.$producto->img_path) }}" alt="{{ $producto->nombre}}" class="img-fluid img-thumbnail">
+                                                            @else
+                                                                <img src="{{ Storage::url('public/productos/default.png') }}" alt="{{ $producto->nombre}}" class="img-fluid img-thumbnail">
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                                     </div>
                                                     </div>
                                                 </div>

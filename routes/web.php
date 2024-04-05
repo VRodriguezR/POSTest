@@ -5,6 +5,7 @@ use App\Http\Controllers\categoriaController;
 use App\Http\Controllers\marcaController;
 use App\Http\Controllers\presentacioneController;
 use App\Http\Controllers\productoController;
+use App\Http\Controllers\clienteController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,4 +39,5 @@ Route::resources([
     'marcas' => marcaController::class,
     'presentaciones' => presentacioneController::class,
     'productos' => productoController::class,
+    'clientes' => clienteController::class,
 ]);
