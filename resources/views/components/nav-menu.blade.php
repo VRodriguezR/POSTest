@@ -13,7 +13,7 @@
 <hr class="sidebar-divider my-0">
 
 <!-- Nav Item - Dashboard -->
-<li class="nav-item active">
+<li class="nav-item {{ (str_contains(url()->current(), 'panel'))? 'active' : '' }}">
     <a class="nav-link" href="{{ route('panel') }}">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Panel</span></a>
@@ -94,39 +94,59 @@
 </li>
 -->
 <!-- Nav Item - Categorias -->
-<li class="nav-item">
+<li class="nav-item {{ (str_contains(url()->current(), 'categoria'))? 'active' : '' }}">
     <a class="nav-link" href="{{ route('categorias.index')}}">
         <i class="fas fa-fw fa-table"></i>
         <span>Categorias</span></a>
 </li>
 
-<li class="nav-item">
+<li class="nav-item {{ (str_contains(url()->current(), 'presentacion'))? 'active' : '' }}">
     <a class="nav-link" href="{{ route('presentaciones.index')}}">
         <i class="fas fa-fw fa-box"></i>
         <span>Presentaciones</span></a>
 </li>
 
-<li class="nav-item">
+<li class="nav-item {{ (str_contains(url()->current(), 'marca'))? 'active' : '' }}">
     <a class="nav-link" href="{{ route('marcas.index')}}">
         <i class="fas fa-fw fa-trademark"></i>
         <span>Marcas</span></a>
 </li>
 
 
-<li class="nav-item">
+<li class="nav-item {{ (str_contains(url()->current(), 'producto'))? 'active' : '' }}">
     <a class="nav-link" href="{{ route('productos.index')}}">
         <i class="fas fa-shopping-basket"></i>
         <span>Productos</span></a>
 </li>
 
-<li class="nav-item">
+<li class="nav-item {{ (str_contains(url()->current(), 'cliente'))? 'active' : '' }}">
     <a class="nav-link" href="{{ route('clientes.index')}}">
         <i class="fas fa-users"></i>
         <span>Clientes</span></a>
 </li>
 
+<li class="nav-item {{ (str_contains(url()->current(), 'proveedor'))? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('proveedores.index')}}">
+        <i class="fas fa-user-tie"></i>
+        <span>Proveedores</span></a>
+</li>
+
 <!-- Divider -->
 <hr class="sidebar-divider d-none d-md-block">
+
+<li class="nav-item {{ (str_contains(url()->current(), 'compra'))? 'active' : '' }}">
+    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
+        aria-expanded="true" aria-controls="collapsePages">
+        <i class="fas fa-fw fa-shopping-bag"></i>
+        <span>Compras</span>
+    </a>
+    <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-bs-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="{{route('compras.index')}}">Ver</a>
+            <a class="collapse-item" href="{{route('compras.create')}}">Crear</a>
+        </div>
+    </div>
+</li>
 
 <!-- Sidebar Toggler (Sidebar) -->
 <div class="text-center d-none d-md-inline">

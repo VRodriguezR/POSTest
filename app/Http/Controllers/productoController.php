@@ -20,7 +20,7 @@ class productoController extends Controller
     public function index()
     {
         $productos = Producto::with('marca.caracteristica', 'presentacione.caracteristica', 'categorias.caracteristica')->get();
-        // dd($productos);
+
         return view('producto.index', compact('productos'));
     }
 

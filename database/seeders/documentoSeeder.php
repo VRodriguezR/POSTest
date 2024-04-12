@@ -18,6 +18,10 @@ class documentoSeeder extends Seeder
             ['tipo_documento' => 'LICENCIA DE CONDUCIR'],
             ['tipo_documento' => 'PASAPORTE'],
             ['tipo_documento' => 'CEDULA PROFESIONAL'],
+            ['tipo_documento' => 'CARTILLA MILITAR'],
+            ['tipo_documento' => 'RFC'],
+            ['tipo_documento' => 'CURP'],
+            ['tipo_documento' => 'VISA'],
         ]);
     }
 }

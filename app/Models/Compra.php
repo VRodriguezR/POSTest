@@ -23,4 +23,13 @@ class Compra extends Model
     {
         return $this->belongsToMany(Producto::class)->withPivot('cantidad', 'precio_compra', 'precio_venta')->withTimestamps();
     }
+
+    protected $fillable = [
+        'fecha_hora',
+        'impuesto',
+        'numero_comprobante',
+        'total',
+        'proveedore_id',
+        'comprobante_id',
+    ];
 }

@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\storePersonaRequest;
-use App\Http\Requests\updatePersonaRequest;
+use App\Http\Requests\storeProveedoreRequest;
+use App\Http\Requests\updateProveedoreRequest;
 use Illuminate\Http\Request;
 use App\Models\Documento;
 use App\Models\Persona;
-use App\Models\Cliente;
+use App\Models\Proveedore;
 use Illuminate\Support\Facades\DB;
-class clienteController extends Controller
+class proveedoreController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $clientes = Cliente::with('persona.documento')->get();
+        $proveedores = Proveedore::with('persona.documento')->get();
 
-        return view('cliente.index', compact('clientes'));
+        return view('proveedore.index', compact('proveedores'));
     }
 
     /**
@@ -27,19 +27,19 @@ class clienteController extends Controller
     public function create()
     {
         $documentos = Documento::all();
-        return view('cliente.create', compact('documentos'));
+        return view('proveedore.create', compact('documentos'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(storePersonaRequest $request)
+    public function store(storeProveedoreRequest $request)
     {
         try
         {
             DB::beginTransaction();
             $persona = Persona::create($request->validated());
-            $persona->cliente()->create([
+            $persona->proveedore()->create([
                 'persona_id' => $persona->id,
             ]);
             DB::commit();
@@ -47,7 +47,7 @@ class clienteController extends Controller
         {
             DB::rollBack();
         }
-        return redirect()->route('clientes.index')->with('success', 'Registro guardado exitosamente');
+        return redirect()->route('proveedores.index')->with('success', 'Registro guardado exitosamente');
     }
 
     /**
@@ -61,28 +61,28 @@ class clienteController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Cliente $cliente)
+    public function edit(Proveedore $proveedore)
     {
-        $cliente->load('persona.documento');
+        $proveedore->load('persona.documento');
         $documentos = Documento::all();
-        return view('cliente.edit', compact('cliente', 'documentos'));
+        return view('proveedore.edit', compact('proveedore', 'documentos'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(updatePersonaRequest $request, Cliente $cliente)
+    public function update(updateProveedoreRequest $request, Proveedore $proveedore)
     {
         try
         {
             DB::beginTransaction();
-            Persona::where('id', $cliente->persona->id)->update($request->validated());
+            Persona::where('id', $proveedore->persona->id)->update($request->validated());
             DB::commit();
         }catch(\Exception $e)
         {
             DB::rollBack();
         }
-        return redirect()->route('clientes.index')->with('success', 'Registro actualizado exitosamente');
+        return redirect()->route('proveedores.index')->with('success', 'Registro actualizado exitosamente');
     }
 
     /**
@@ -100,7 +100,7 @@ class clienteController extends Controller
                     'estado' => 0,
                 ]
             );
-            $message = 'Cliente eliminado correctamente';
+            $message = 'Proveedor eliminado correctamente';
         } else {
             Persona::where('id', $persona->id)
             ->update(
@@ -108,9 +108,9 @@ class clienteController extends Controller
                     'estado' => 1,
                 ]
             );
-            $message = 'Cliente restaurado correctamente';
+            $message = 'Proveedor restaurado correctamente';
         }
 
-        return redirect()->route('clientes.index')->with('success', $message);
+        return redirect()->route('proveedores.index')->with('success', $message);
     }
 }

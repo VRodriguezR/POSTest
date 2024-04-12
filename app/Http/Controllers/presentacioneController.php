@@ -18,8 +18,7 @@ class presentacioneController extends Controller
     public function index()
     {
         $presentaciones = Presentacione::with('caracteristica')->latest()->get();
-
-        return view('presentacione.index', ['presentaciones' => $presentaciones]);
+        return view('presentacione.index', compact('presentaciones'));
     }
 
     /**

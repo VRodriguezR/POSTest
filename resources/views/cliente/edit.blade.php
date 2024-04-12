@@ -1,6 +1,6 @@
 @extends('template')
 
-@section('title', 'Editar Categoria')
+@section('title', 'Editar Cliente')
 
 @push('css')
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
@@ -18,10 +18,10 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <div class="col-md-8">
-                <h1 class="h3 mb-0 text-gray-800">Editar Categoria</h1>
+                <h1 class="h3 mb-0 text-gray-800">Editar Cliente</h1>
                 <ol class="breadcrumb  mb-4 fs-7 bg-transparent">
                     <li class="breadcrumb-item"><a href="{{ route('panel') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('categorias.index') }}">Categorias</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('clientes.index') }}">Clientes</a></li>
                     <li class="breadcrumb-item active">Editar</li>
                 </ol>
             </div>
@@ -31,28 +31,57 @@
             <div class="col-md-12">
                 <div class="card shadow mb-4">
                     <div class="card-body">
-                        <form action="{{ route('categorias.update', ['categoria'=> $categoria]) }}" method="POST">
+                        <form action="{{ route('clientes.update', ['cliente'=> $cliente]) }}" method="POST">
                             @method('PATCH')
                             @csrf
                             <div class="row g-3">
                                 <div class="col-md-6 mb-3">
-                                    <label for="nombre" class="form-label">Nombre</label>
-                                    <input type="text" class="form-control" id="nombre" name="nombre" value="{{ old('nombre', $categoria->caracteristica->nombre) }}">
-                                    @error('nombre')
+                                    <label for="nombre" class="form-label">Tipo de Persona:<span class="fw-bold"> {{ strtoupper($cliente->persona->tipo_persona) }}</span></label>
+                                </div>
+                                <div class="col-md-12 mb-3" id="box-razon_social">
+                                    @if($cliente->persona->tipo_persona == 'natural')
+                                        <label id="label_natural" for="razon_social" class="form-label">Nombre Completo:</label>
+                                    @else
+                                        <label id="label_juridica" for="razon_social" class="form-label">Nombre de la Empresa:</label>
+                                    @endif
+                                    <input type="text" class="form-control" id="razon_social" name="razon_social" value="{{ old('razon_social', $cliente->persona->razon_social)}}"/>
+                                    @error('razon_social')
                                         <span class="text-danger fs-7">{{ '*'.$message }}</span>
                                     @enderror
                                 </div>
                                 <div class="col-md-12 mb-3">
-                                    <label for="descripcion" class="form-label">Descripcion</label>
-                                    <textarea class="form-control" id="descripcion" name="descripcion" rows="3">{{ old('descripcion', $categoria->caracteristica->descripcion)}}</textarea>
-                                    @error('descripcion')
+                                    <label for="direccion" class="form-label">Direccion:</label>
+                                    <input type="text" class="form-control" id="direccion" name="direccion" value="{{ old('direccion', $cliente->persona->direccion)}}"/>
+                                    @error('direccion')
+                                        <span class="text-danger fs-7">{{ '*'.$message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="documento_id" class="form-label">Tipo de Documento:</label>
+                                    <select class="form-control" name="documento_id" id="documento_id">
+                                        @foreach($documentos as $documento)
+                                            @if($documento->id == $cliente->persona->documento_id)
+                                                <option value="{{ $documento->id }}"  {{ old('documento_id') == $documento->id ? selected : '' }} selected>{{ $documento->tipo_documento }}</option>
+                                            @else
+                                                <option value="{{ $documento->id }}" {{ old('documento_id') == $documento->id ? selected : '' }}>{{ $documento->tipo_documento }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                    @error('documento_id')
+                                        <span class="text-danger fs-7">{{ '*'.$message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="numero_documento" class="form-label">Numero de Documento:</label>
+                                    <input type="text" class="form-control" id="numero_documento" name="numero_documento" value="{{ old('numero_documento', $cliente->persona->numero_documento)}}"/>
+                                    @error('numero_documento')
                                         <span class="text-danger fs-7">{{ '*'.$message }}</span>
                                     @enderror
                                 </div>
                                 <div class="col-md-12">
-                                    <a href="{{ route('categorias.index') }}" class="btn btn-secondary ms-auto">Cancelar</a>
-                                    <button type="reset" class="btn btn-info mx-2">Reiniciar</button>
-                                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                                    <a href="{{ route('clientes.index') }}" class="btn btn-secondary me-2">Cancelar</a>
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
                                 </div>
                             </div>
                         </form>

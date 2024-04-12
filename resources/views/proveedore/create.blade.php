@@ -1,6 +1,6 @@
 @extends('template')
 
-@section('title', 'Crear Cliente')
+@section('title', 'Crear Proveedor')
 
 @push('css')
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
@@ -18,10 +18,10 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <div class="col-md-8">
-                <h1 class="h3 mb-0 text-gray-800">Crear Cliente</h1>
+                <h1 class="h3 mb-0 text-gray-800">Crear Proveedor</h1>
                 <ol class="breadcrumb  mb-4 fs-7 bg-transparent">
                     <li class="breadcrumb-item"><a href="{{ route('panel') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('categorias.index') }}">Clientes</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('categorias.index') }}">Proveedores</a></li>
                     <li class="breadcrumb-item active">Crear</li>
                 </ol>
             </div>
@@ -31,7 +31,7 @@
             <div class="col-md-12">
                 <div class="card shadow mb-4">
                     <div class="card-body">
-                        <form action="{{ route('clientes.store') }}" method="POST">
+                        <form action="{{ route('proveedores.store') }}" method="POST">
                             @csrf
                             <div class="row g-3">
                                 <div class="col-md-6 mb-3">
@@ -81,7 +81,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-12">
-                                    <a href="{{ route('clientes.index') }}" class="btn btn-secondary me-2">Cancelar</a>
+                                    <a href="{{ route('proveedores.index') }}" class="btn btn-secondary me-2">Cancelar</a>
                                     <button type="submit" class="btn btn-primary">Guardar</button>
                                 </div>
                             </div>

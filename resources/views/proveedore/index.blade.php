@@ -16,23 +16,23 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <div class="col-md-8">
-                <h1 class="h3 mb-0 text-gray-800">Clientes</h1>
+                <h1 class="h3 mb-0 text-gray-800">Proveedores</h1>
                 <ol class="breadcrumb mb-4 fs-7 bg-transparent">
                     <li class="breadcrumb-item"><a href="{{ route('panel') }}">Inicio</a></li>
-                    <li class="breadcrumb-item active">Clientes</li>
+                    <li class="breadcrumb-item active">Proveedores</li>
                 </ol>
             </div>
-            <a href="{{ route('clientes.create') }}">
+            <a href="{{ route('proveedores.create') }}">
                 <button class="btn btn-primary">
                     <i class="fas fa-plus"></i>
-                    Añadir Cliente
+                    Añadir Proveedor
                 </button>
             </a>
         </div>
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Listado de Clientes</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Listado de Proveedores</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -48,14 +48,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($clientes as $cliente)
+                                        @foreach ($proveedores as $proveedore)
                                             <tr>
-                                                <td>{{ $cliente->persona->razon_social }}</td>
-                                                <td>{{ $cliente->persona->direccion }}</td>
-                                                <td>{{ $cliente->persona->documento->tipo_documento }}</td>
-                                                <td>{{ $cliente->persona->numero_documento }}</td>
+                                                <td>{{ $proveedore->persona->razon_social }}</td>
+                                                <td>{{ $proveedore->persona->direccion }}</td>
+                                                <td>{{ $proveedore->persona->documento->tipo_documento }}</td>
+                                                <td>{{ $proveedore->persona->numero_documento }}</td>
                                                 <td>
-                                                    @if ($cliente->persona->estado == 1)
+                                                    @if ($proveedore->persona->estado == 1)
                                                         <span class="badge badge-success rounded-pill d-inline text-white">Activo</span>
                                                     @else
                                                         <span class="badge badge-danger rounded-pill d-inline text-white">Inactivo</span>
@@ -63,18 +63,18 @@
                                                 </td>
                                                 <td>
                                                     <div class="btn-group" role="group" aria-label="Grupo">
-                                                        <form action="{{ route('clientes.edit', ['cliente'=> $cliente]) }}" method="get">
+                                                        <form action="{{ route('proveedores.edit', ['proveedore'=> $proveedore]) }}" method="get">
                                                             @csrf
                                                             <button type="submit" class="btn btn-primary btn-sm">
                                                                 <i class="fas fa-edit"></i>
                                                             </button>
                                                         </form>
-                                                        @if ($cliente->persona->estado == 1)
-                                                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-{{$cliente->id}}" >
+                                                        @if ($proveedore->persona->estado == 1)
+                                                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-{{$proveedore->persona->id}}" >
                                                                 <i class="fas fa-trash"></i>
                                                             </button>
                                                         @else
-                                                            <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-{{$cliente->id}}" >
+                                                            <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-{{$proveedore->persona->id}}" >
                                                                 <i class="fas fa-trash-restore"></i>
                                                             </button>
                                                         @endif
@@ -83,27 +83,27 @@
                                             </tr>
                                             <!-- Modal -->
                                             <div class="modal fade"
-                                                id="deleteModal-{{$cliente->id}}"
+                                                id="deleteModal-{{$proveedore->persona->id}}"
                                                 tabindex="-1"
                                                 aria-labelledby="exampleModalLabel"
                                                 aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">{{ ($cliente->persona->estado ==1)? 'Eliminar' : 'Restaurar' }} Cliente</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">{{ ($proveedore->persona->estado ==1)? 'Eliminar' : 'Restaurar' }} Proveedor</h5>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body
                                                             text-center">
-                                                            @if ($cliente->persona->estado == 1)
-                                                                <p>¿Estas seguro de dar de baja el cliente?</p>
+                                                            @if ($proveedore->persona->estado == 1)
+                                                                <p>¿Estas seguro de dar de baja el proveedor?</p>
                                                             @else
-                                                                <p>¿Estas seguro de restaurar el cliente?</p>
+                                                                <p>¿Estas seguro de restaurar el proveedor?</p>
                                                             @endif
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                                            <form action="{{ route('clientes.destroy', ['cliente'=> $cliente]) }}" method="post">
+                                                            <form action="{{ route('proveedores.destroy', ['proveedore'=> $proveedore->persona->id]) }}" method="post">
                                                                 @csrf
                                                                 @method('delete')
                                                                 <button type="submit" class="btn btn-danger">Confirmar</button>

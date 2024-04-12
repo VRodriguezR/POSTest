@@ -17,8 +17,7 @@ class categoriaController extends Controller
     public function index()
     {
         $categorias = Categoria::with('caracteristica')->latest()->get();
-
-        return view('categoria.index', ['categorias' => $categorias]);
+        return view('categoria.index', compact('categorias'));
     }
 
     /**

@@ -23,4 +23,12 @@ class Persona extends Model
     {
         return $this->hasOne(Cliente::class);
     }
+
+    protected $fillable = [
+        'tipo_persona',
+        'razon_social',
+        'direccion',
+        'documento_id',
+        'numero_documento',
+    ];
 }
