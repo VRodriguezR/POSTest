@@ -131,9 +131,6 @@
         <span>Proveedores</span></a>
 </li>
 
-<!-- Divider -->
-<hr class="sidebar-divider d-none d-md-block">
-
 <li class="nav-item {{ (str_contains(url()->current(), 'compra'))? 'active' : '' }}">
     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
         aria-expanded="true" aria-controls="collapsePages">
@@ -146,6 +143,37 @@
             <a class="collapse-item" href="{{route('compras.create')}}">Crear</a>
         </div>
     </div>
+</li>
+
+<li class="nav-item {{ (str_contains(url()->current(), 'venta'))? 'active' : '' }}">
+    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseVentas"
+        aria-expanded="true" aria-controls="collapseVentas">
+        <i class="fas fa-fw fa-shopping-cart"></i>
+        <span>Ventas</span>
+    </a>
+    <div id="collapseVentas" class="collapse" aria-labelledby="headingPages" data-bs-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="{{route('ventas.index')}}">Ver</a>
+            <a class="collapse-item" href="{{route('ventas.create')}}">Crear</a>
+        </div>
+    </div>
+</li>
+
+<!-- Divider -->
+<hr class="sidebar-divider d-none d-md-block">
+<div class="sidebar-heading">
+    Otros
+</div>
+<li class="nav-item {{ (str_contains(url()->current(), 'user'))? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('users.index')}}">
+        <i class="fas fa-user"></i>
+        <span>Usuarios</span></a>
+</li>
+
+<li class="nav-item {{ (str_contains(url()->current(), 'role'))? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('roles.index')}}">
+        <i class="fas fa-user-plus"></i>
+        <span>Roles</span></a>
 </li>
 
 <!-- Sidebar Toggler (Sidebar) -->

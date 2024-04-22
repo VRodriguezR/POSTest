@@ -76,11 +76,9 @@
                                                     @endif
                                                 <td>
                                                     <div class="btn-group">
-                                                        <form action="{{ route('productos.edit', ['producto' => $producto]) }}" method="GET">
-                                                            <button type="submit" class="btn btn-primary">
+                                                        <a href="{{ route('productos.edit', ['producto' => $producto]) }}" class="btn btn-primary">
                                                                 <i class="fas fa-edit"></i>
-                                                            </button>
-                                                        </form>
+                                                        </a>
 
                                                         <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#detailModal-{{$producto->id}}">
                                                             <i class="fas fa-eye"></i>

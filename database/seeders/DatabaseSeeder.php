@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(documentoSeeder::class);
         $this->call(comprobanteSeeder::class);
         $this->call(userSeeder::class);
+        $this->call(permissionSeeder::class);
     }
 }

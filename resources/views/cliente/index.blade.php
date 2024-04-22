@@ -63,12 +63,9 @@
                                                 </td>
                                                 <td>
                                                     <div class="btn-group" role="group" aria-label="Grupo">
-                                                        <form action="{{ route('clientes.edit', ['cliente'=> $cliente]) }}" method="get">
-                                                            @csrf
-                                                            <button type="submit" class="btn btn-primary btn-sm">
+                                                        <a href="{{ route('clientes.edit', ['cliente'=> $cliente]) }}" class="btn btn-primary btn-sm">
                                                                 <i class="fas fa-edit"></i>
-                                                            </button>
-                                                        </form>
+                                                        </a>
                                                         @if ($cliente->persona->estado == 1)
                                                             <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-{{$cliente->id}}" >
                                                                 <i class="fas fa-trash"></i>

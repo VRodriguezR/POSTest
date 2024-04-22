@@ -1,6 +1,6 @@
 @extends('template')
 
-@section('title', 'Ver Compra')
+@section('title', 'Ver Venta')
 
 @push('css')
 <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -13,11 +13,11 @@
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-2">
     <div class="col-md-8">
-        <h1 class="h3 mb-0 text-gray-800">Compras</h1>
+        <h1 class="h3 mb-0 text-gray-800">Ventas</h1>
         <ol class="breadcrumb mb-4 fs-7 bg-transparent">
             <li class="breadcrumb-item"><a href="{{ route('panel') }}">Inicio</a></li>
-            <li class="breadcrumb-item "><a href="{{ route('compras.index') }}">Compras</a></li>
-            <li class="breadcrumb-item active">Ver Compra</li>
+            <li class="breadcrumb-item "><a href="{{ route('ventas.index') }}">Ventas</a></li>
+            <li class="breadcrumb-item active">Ver Venta</li>
         </ol>
     </div>
 </div>
@@ -39,7 +39,7 @@
                     </div>
                     <div class="col-sm-8">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" value="{{ $compra->comprobante->tipo_comprobante }}" disabled>
+                            <input type="text" class="form-control" value="{{ $venta->comprobante->tipo_comprobante }}" disabled>
                         </div>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                     </div>
                     <div class="col-sm-8">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" value="{{ $compra->numero_comprobante }}" disabled>
+                            <input type="text" class="form-control" value="{{ $venta->numero_comprobante }}" disabled>
                         </div>
                     </div>
                 </div>
@@ -62,12 +62,26 @@
                     <div class="col-sm-4">
                         <div class="input-group mb-3">
                             <span class="input-group-text bg-white"><i class="fas fa-user-tie" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control bg-white" value="Proveedor:" disabled>
+                            <input type="text" class="form-control bg-white" value="Cliente:" disabled>
                         </div>
                     </div>
                     <div class="col-sm-8">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" value="{{ $compra->proveedore->persona->razon_social }}" disabled>
+                            <input type="text" class="form-control" value="{{ $venta->cliente->persona->razon_social }}" disabled>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-sm-4">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-white"><i class="fas fa-user" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control bg-white" value="Vendedor:" disabled>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" value="{{ $venta->user->name }}" disabled>
                         </div>
                     </div>
                 </div>
@@ -81,7 +95,7 @@
                     </div>
                     <div class="col-sm-8">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" value="{{ \Carbon\Carbon::parse($compra->fecha_hora)->isoFormat('dddd, D [de] MMMM [de] YYYY')}}" disabled>
+                            <input type="text" class="form-control" value="{{ \Carbon\Carbon::parse($venta->fecha_hora)->isoFormat('dddd, D [de] MMMM [de] YYYY')}}" disabled>
                         </div>
                     </div>
                 </div>
@@ -95,7 +109,7 @@
                     </div>
                     <div class="col-sm-8">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" value="{{ \Carbon\Carbon::parse($compra->fecha_hora)->isoFormat('hh:mm:ss A') }}" disabled>
+                            <input type="text" class="form-control" value="{{ \Carbon\Carbon::parse($venta->fecha_hora)->isoFormat('hh:mm:ss A') }}" disabled>
                         </div>
                     </div>
                 </div>
@@ -109,10 +123,11 @@
                     </div>
                     <div class="col-sm-8">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" value="{{ $compra->impuesto }}" disabled>
+                            <input type="text" class="form-control" value="{{ $venta->impuesto }}" disabled>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
         <div class="card border-primary mb-4">
@@ -126,19 +141,19 @@
                             <tr>
                                 <th>Producto</th>
                                 <th>Cantidad</th>
-                                <th>Precio Compra</th>
                                 <th>Precio Venta</th>
                                 <th>Subtotal</th>
+                                <th>Descuento</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($compra->productos as $detalle)
+                            @foreach ($venta->productos as $detalle)
                             <tr>
                                 <td>{{ $detalle->nombre }}</td>
                                 <td>{{ $detalle->pivot->cantidad }}</td>
-                                <td>{{ $detalle->pivot->precio_compra }}</td>
                                 <td>{{ $detalle->pivot->precio_venta }}</td>
-                                <td>{{ $detalle->pivot->cantidad * $detalle->pivot->precio_compra }}</td>
+                                <td>{{ $detalle->pivot->cantidad * $detalle->pivot->precio_venta }}</td>
+                                <td>{{ $detalle->pivot->descuento }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -150,6 +165,10 @@
                             <tr>
                                 <th colspan="4" class="text-end fw-bold">IVA:</th>
                                 <th id="th_iva"></th>
+                            </tr>
+                            <tr>
+                                <th colspan="4" class="text-end fw-bold">DESCUENTO:</th>
+                                <th id="th_descuento"></th>
                             </tr>
                             <tr>
                                 <th colspan="4" class="text-end fw-bold">TOTAL:</th>
@@ -179,23 +198,25 @@
         let sumas = 0;
         let iva = 0;
         let total = 0;
-        let precio_compra = 0;
+        let precio_venta = 0;
         let cantidad = 0;
         let subtotal = 0;
+        let descuento = 0;
 
         $('tbody tr').each(function() {
-            precio_compra = parseFloat($(this).find('td').eq(2).text());
+            precio_venta = parseFloat($(this).find('td').eq(2).text());
             cantidad = parseFloat($(this).find('td').eq(1).text());
-            subtotal = precio_compra * cantidad;
-            sumas += subtotal;
+            total += precio_venta * cantidad;
+            descuento += parseFloat($(this).find('td').eq(4).text());
         });
 
-        iva = sumas * 0.16;
-        total = sumas + iva;
+        iva = (total - descuento) * 0.16;
+        subtotal = total - iva + descuento;
 
-        $('#th_sumas').text(sumas.toFixed(2));
-        $('#th_iva').text(iva.toFixed(2));
-        $('#th_total').text(total.toFixed(2));
+        $('#th_sumas').text('$'+subtotal.toFixed(2));
+        $('#th_iva').text('$'+iva.toFixed(2));
+        $('#th_descuento').text('- $'+descuento.toFixed(2));
+        $('#th_total').text('$'+total.toFixed(2));
     });
 </script>
 @endpush

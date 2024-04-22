@@ -1,6 +1,6 @@
 @extends('template')
 
-@section('title', 'Compras')
+@section('title', 'Ventas')
 
 @push('css')
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
@@ -16,23 +16,23 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <div class="col-md-8">
-                <h1 class="h3 mb-0 text-gray-800">Compras</h1>
+                <h1 class="h3 mb-0 text-gray-800">Ventas</h1>
                 <ol class="breadcrumb mb-4 fs-7 bg-transparent">
                     <li class="breadcrumb-item"><a href="{{ route('panel') }}">Inicio</a></li>
-                    <li class="breadcrumb-item active">Compras</li>
+                    <li class="breadcrumb-item active">Ventas</li>
                 </ol>
             </div>
-            <a href="{{ route('compras.create') }}">
+            <a href="{{ route('ventas.create') }}">
                 <button class="btn btn-primary">
                     <i class="fas fa-plus"></i>
-                    Añadir Compras
+                    Realizar Venta
                 </button>
             </a>
         </div>
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Listado de Compras</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Listado de Ventas</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -42,38 +42,40 @@
                                             <th>Comprobante</th>
                                             <th>Proveedor</th>
                                             <th>Fecha y Hora</th>
+                                            <th>Usuario</th>
                                             <th>Total</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($compras as $compra)
+                                        @foreach ($ventas as $venta)
                                             <tr>
                                                 <td>
-                                                    <p class="fw-semibold mb-1 text-dark fs-7 p-0">{{ $compra->comprobante->tipo_comprobante }}</p>
-                                                    <p class="text-muted mb-0 fs-7 p-0">{{ $compra->numero_comprobante}}</p>
+                                                    <p class="fw-semibold mb-1 text-dark fs-7 p-0">{{ $venta->comprobante->tipo_comprobante }}</p>
+                                                    <p class="text-muted mb-0 fs-7 p-0">{{ $venta->numero_comprobante}}</p>
                                                 </td>
                                                 <td>
-                                                    <p class="fw-semibold mb-1 text-dark fs-7 p-0">{{ ucfirst($compra->proveedore->persona->tipo_persona) }}</p>
-                                                    <p class="text-muted mb-0 fs-7 p-0">{{ $compra->proveedore->persona->razon_social }}</p>
+                                                    <p class="fw-semibold mb-1 text-dark fs-7 p-0">{{ ucfirst($venta->cliente->persona->tipo_persona) }}</p>
+                                                    <p class="text-muted mb-0 fs-7 p-0">{{ $venta->cliente->persona->razon_social }}</p>
 
                                                 </td>
                                                 <td>
                                                     {{
-                                                        \Carbon\Carbon::parse($compra->fecha_hora)->isoFormat('dddd, D [de] MMMM [de] YYYY') . ' - ' . \Carbon\Carbon::parse($compra->fecha_hora)->isoFormat('hh:mm:ss A')
+                                                        \Carbon\Carbon::parse($venta->fecha_hora)->isoFormat('dddd, D [de] MMMM [de] YYYY') . ' - ' . \Carbon\Carbon::parse($venta->fecha_hora)->isoFormat('hh:mm:ss A')
                                                     }}
                                                 </td>
-                                                <td>{{ $compra->total }}</td>
+                                                <td>{{ $venta->user->name }}</td>
+                                                <td>{{ '$'.$venta->total }}</td>
                                                 <td>
                                                     <div class="btn-group" role="group" aria-label="acciones">
-                                                        <form action="{{ route('compras.show', ['compra' => $compra]) }}" method="get">
+                                                        <form action="{{ route('ventas.show', ['venta' => $venta]) }}" method="get">
                                                             @csrf
                                                             <button type="submit" class="btn btn-info btn-sm">
                                                                 <i class="fas fa-eye
                                                                 "></i>
                                                             </button>
                                                         </form>
-                                                        <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal-{{$compra->id}}" class="btn btn-danger btn-sm">
+                                                        <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal-{{$venta->id}}" class="btn btn-danger btn-sm">
                                                             <i class="fas fa-trash
                                                             "></i>
                                                         </button>
@@ -81,7 +83,7 @@
                                                 </td>
                                             </tr>
 
-                                            <div class="modal fade" id="deleteModal-{{$compra->id}}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="deleteModal-{{$venta->id}}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                     <div class="modal-header">
@@ -89,11 +91,11 @@
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        ¿Estas seguro de eliminar esta compra? (Esta accion no se puede deshacer)
+                                                        ¿Estas seguro de eliminar esta venta? (Esta accion no se puede deshacer)
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                                        <form method="POST" action="{{ route('compras.destroy', ['compra'=>$compra->id]) }}">
+                                                        <form method="POST" action="{{ route('ventas.destroy', ['venta'=>$venta->id]) }}">
                                                             @method('DELETE')
                                                             @csrf
                                                             <button type="submit" class="btn btn-danger">Confirmar</button>

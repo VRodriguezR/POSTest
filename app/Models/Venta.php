@@ -9,6 +9,8 @@ class Venta extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
+
     public function cliente()
     {
         return $this->belongsTo(Cliente::class);
@@ -26,6 +28,7 @@ class Venta extends Model
 
     public function productos()
     {
-        return $this->belongsToMany(Producto::class)->withPivot('cantidad', 'precio', 'descuento')->withTimestamps();
+        return $this->belongsToMany(Producto::class)->withTimestamps()->withPivot('cantidad', 'precio_venta', 'descuento')->withTimestamps();
     }
+
 }
