@@ -46,7 +46,7 @@
             </form>
         </div>
     </li>
-
+{{--
     <!-- Nav Item - Alerts -->
     <li class="nav-item dropdown no-arrow mx-1">
         <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
@@ -162,7 +162,7 @@
             </a>
             <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
         </div>
-    </li>
+    </li> --}}
 
     <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -171,13 +171,18 @@
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ auth()->user()->name }}</span>
+            @if(auth()->user()->avatar == null)
             <img class="img-profile rounded-circle"
-                src="{{url('/img/undraw_profile.svg')}}">
+                src="{{(auth()->user()->gender == 'M')? url('/img/undraw_profile.svg') : url('/img/undraw_profile_3.svg') }}">
+            @else
+                <img class="img-profile rounded-circle"
+                    src="{{ url('/storage/avatars/'.auth()->user()->avatar) }}">
+            @endif
         </a>
         <!-- Dropdown - User Information -->
         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
             aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" href="{{route('profile.index')}}">
                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                 Perfil
             </a>

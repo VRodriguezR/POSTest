@@ -77,7 +77,7 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                                            <form action="{{ route('roles.destroy', ['role'=> $rol]) }}" method="post">
+                                                            <form action="{{ route('roles.destroy', ['role'=> $rol->id]) }}" method="post">
                                                                 @csrf
                                                                 @method('delete')
                                                                 <button type="submit" class="btn btn-danger">Confirmar</button>
@@ -138,20 +138,10 @@
         <script defer>
             $(document).ready(function() {
                 let message = "{{ session('error') }}";
-                const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 5000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-                });
-                Toast.fire({
-                icon: "error",
-                title: message,
+                const Alert = Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: message,
                 });
             });
         </script>

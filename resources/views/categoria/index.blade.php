@@ -22,12 +22,14 @@
                     <li class="breadcrumb-item active">Categorias</li>
                 </ol>
             </div>
-            <a href="{{ route('categorias.create') }}">
-                <button class="btn btn-primary">
-                    <i class="fas fa-plus"></i>
-                    Añadir categoria
-                </button>
-            </a>
+            @can('crear-categoria')
+                <a href="{{ route('categorias.create') }}">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-plus"></i>
+                        Añadir categoria
+                    </button>
+                </a>
+            @endcan
         </div>
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
@@ -59,19 +61,22 @@
                                                 </td>
                                                 <td>
                                                     <div class="btn-group" role="group" aria-label="Acciones">
-                                                        <a href="{{ route('categorias.edit', $categoria->id) }}" class="btn btn-primary">
-                                                            <i class="fas fa-edit"></i>
-                                                        </a>
-                                                        @if ($categoria->caracteristica->estado == 1)
-                                                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{$categoria->id}}">
-                                                                <i class="fas fa-trash"></i>
-                                                            </button>
-                                                        @else
-                                                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#deleteModal-{{$categoria->id}}">
-                                                                <i class="fas fa-trash-restore"></i>
-                                                            </button>
-                                                        @endif
-
+                                                        @can('editar-categoria')
+                                                            <a href="{{ route('categorias.edit', $categoria->id) }}" class="btn btn-primary">
+                                                                <i class="fas fa-edit"></i>
+                                                            </a>
+                                                        @endcan
+                                                        @can('eliminar-categoria')
+                                                            @if ($categoria->caracteristica->estado == 1)
+                                                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{$categoria->id}}">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
+                                                            @else
+                                                                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#deleteModal-{{$categoria->id}}">
+                                                                    <i class="fas fa-trash-restore"></i>
+                                                                </button>
+                                                            @endif
+                                                        @endcan
                                                     </div>
                                                 </td>
                                             </tr>
@@ -141,6 +146,17 @@
                 Toast.fire({
                 icon: "success",
                 title: message,
+                });
+            });
+        </script>
+    @elseif (session('error'))
+        <script defer>
+            $(document).ready(function() {
+                let message = "{{ session('error') }}";
+                const Alert = Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: message,
                 });
             });
         </script>

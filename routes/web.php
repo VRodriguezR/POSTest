@@ -14,6 +14,8 @@ use App\Http\Controllers\ventaController;
 use App\Http\Controllers\logoutController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\profileController;
+// use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +50,9 @@ Route::get('/forgot', function () {
 
 Route::view('/panel', 'panel.index')->name('panel');
 
+// Route::get('/storage', function () {
+//     Artisan::call('storage:link');
+// });
 
 
 Route::resources([
@@ -61,4 +66,5 @@ Route::resources([
     'ventas' => ventaController::class,
     'users' => UserController::class,
     'roles' => RoleController::class,
+    'profile' => profileController::class,
 ]);

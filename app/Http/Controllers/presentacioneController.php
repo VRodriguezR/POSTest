@@ -12,6 +12,15 @@ use Illuminate\Support\Facades\DB;
 
 class presentacioneController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:ver-presentacione|crear-presentacione|editar-presentacione|eliminar-presentacione', ['only' => ['index']]);
+        $this->middleware('permission:crear-presentacione', ['only' => ['create', 'store']]);
+        $this->middleware('permission:editar-presentacione', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:eliminar-presentacione', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      */

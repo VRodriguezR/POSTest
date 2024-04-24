@@ -53,6 +53,16 @@ class permissionSeeder extends Seeder
             'crear-venta',
             'mostrar-venta',
             'eliminar-venta',
+
+            'ver-rol',
+            'crear-rol',
+            'editar-rol',
+            'eliminar-rol',
+
+            'ver-usuario',
+            'crear-usuario',
+            'editar-usuario',
+            'eliminar-usuario',
         ];
 
         foreach ($permisos as $permiso) {

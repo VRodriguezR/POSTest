@@ -94,43 +94,54 @@
 </li>
 -->
 <!-- Nav Item - Categorias -->
+@can('ver-categoria')
 <li class="nav-item {{ (str_contains(url()->current(), 'categoria'))? 'active' : '' }}">
     <a class="nav-link" href="{{ route('categorias.index')}}">
         <i class="fas fa-fw fa-table"></i>
         <span>Categorias</span></a>
 </li>
-
+@endcan
+@can('ver-presentacione')
 <li class="nav-item {{ (str_contains(url()->current(), 'presentacion'))? 'active' : '' }}">
     <a class="nav-link" href="{{ route('presentaciones.index')}}">
         <i class="fas fa-fw fa-box"></i>
         <span>Presentaciones</span></a>
 </li>
+@endcan
 
+@can('ver-marca')
 <li class="nav-item {{ (str_contains(url()->current(), 'marca'))? 'active' : '' }}">
     <a class="nav-link" href="{{ route('marcas.index')}}">
         <i class="fas fa-fw fa-trademark"></i>
         <span>Marcas</span></a>
 </li>
+@endcan
 
-
+@can('ver-producto')
 <li class="nav-item {{ (str_contains(url()->current(), 'producto'))? 'active' : '' }}">
     <a class="nav-link" href="{{ route('productos.index')}}">
         <i class="fas fa-shopping-basket"></i>
         <span>Productos</span></a>
 </li>
+@endcan
 
+@can('ver-cliente')
 <li class="nav-item {{ (str_contains(url()->current(), 'cliente'))? 'active' : '' }}">
     <a class="nav-link" href="{{ route('clientes.index')}}">
         <i class="fas fa-users"></i>
         <span>Clientes</span></a>
 </li>
+@endcan
 
+@can('ver-proveedore')
 <li class="nav-item {{ (str_contains(url()->current(), 'proveedor'))? 'active' : '' }}">
     <a class="nav-link" href="{{ route('proveedores.index')}}">
         <i class="fas fa-user-tie"></i>
         <span>Proveedores</span></a>
 </li>
+@endcan
 
+@can(['ver-compra','crear-compra'])
 <li class="nav-item {{ (str_contains(url()->current(), 'compra'))? 'active' : '' }}">
     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
         aria-expanded="true" aria-controls="collapsePages">
@@ -139,42 +150,60 @@
     </a>
     <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-bs-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
+            @can('ver-compra')
             <a class="collapse-item" href="{{route('compras.index')}}">Ver</a>
+            @endcan
+            @can('crear-compra')
             <a class="collapse-item" href="{{route('compras.create')}}">Crear</a>
+            @endcan
         </div>
     </div>
 </li>
+@endcan
 
-<li class="nav-item {{ (str_contains(url()->current(), 'venta'))? 'active' : '' }}">
-    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseVentas"
-        aria-expanded="true" aria-controls="collapseVentas">
-        <i class="fas fa-fw fa-shopping-cart"></i>
-        <span>Ventas</span>
-    </a>
-    <div id="collapseVentas" class="collapse" aria-labelledby="headingPages" data-bs-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="{{route('ventas.index')}}">Ver</a>
-            <a class="collapse-item" href="{{route('ventas.create')}}">Crear</a>
+@can(['ver-venta','crear-venta'])
+    <li class="nav-item {{ (str_contains(url()->current(), 'venta'))? 'active' : '' }}">
+        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseVentas"
+            aria-expanded="true" aria-controls="collapseVentas">
+            <i class="fas fa-fw fa-shopping-cart"></i>
+            <span>Ventas</span>
+        </a>
+        <div id="collapseVentas" class="collapse" aria-labelledby="headingPages" data-bs-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                @can('ver-venta')
+                    <a class="collapse-item" href="{{route('ventas.index')}}">Ver</a>
+                @endcan
+                @can('crear-venta')
+                    <a class="collapse-item" href="{{route('ventas.create')}}">Crear</a>
+                @endcan
+            </div>
         </div>
+    </li>
+
+@endcan
+
+@can(['ver-usuario','ver-rol'])
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+    <div class="sidebar-heading">
+        Otros
     </div>
-</li>
+    @can('ver-usuario')
+        <li class="nav-item {{ (str_contains(url()->current(), 'user'))? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('users.index')}}">
+                <i class="fas fa-user"></i>
+                <span>Usuarios</span></a>
+        </li>
+    @endcan
 
-<!-- Divider -->
-<hr class="sidebar-divider d-none d-md-block">
-<div class="sidebar-heading">
-    Otros
-</div>
-<li class="nav-item {{ (str_contains(url()->current(), 'user'))? 'active' : '' }}">
-    <a class="nav-link" href="{{ route('users.index')}}">
-        <i class="fas fa-user"></i>
-        <span>Usuarios</span></a>
-</li>
-
-<li class="nav-item {{ (str_contains(url()->current(), 'role'))? 'active' : '' }}">
-    <a class="nav-link" href="{{ route('roles.index')}}">
-        <i class="fas fa-user-plus"></i>
-        <span>Roles</span></a>
-</li>
+    @can('ver-rol')
+        <li class="nav-item {{ (str_contains(url()->current(), 'role'))? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('roles.index')}}">
+                <i class="fas fa-user-plus"></i>
+                <span>Roles</span></a>
+        </li>
+    @endcan
+@endcan
 
 <!-- Sidebar Toggler (Sidebar) -->
 <div class="text-center d-none d-md-inline">

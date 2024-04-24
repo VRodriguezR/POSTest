@@ -157,5 +157,16 @@
                 });
             });
         </script>
+    @elseif (session('error'))
+        <script defer>
+            $(document).ready(function() {
+                let message = "{{ session('error') }}";
+                const Alert = Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: message,
+                });
+            });
+        </script>
     @endif
 @endpush
